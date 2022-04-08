@@ -1,4 +1,5 @@
 # Arduino Pong
+
 Jogo Pong feito para Arduino.
 
 O Pong é um jogo clássico que simula uma partida de tênis de mesa. Esta implementação para Arduino conta com:
@@ -84,7 +85,13 @@ Se a bola **encontra a raquete**, ela verifica em qual lugar da raquete ela toco
 
 Para o modo Difícil, como a raquete é menor (tamanho 2), a bola é rebatida para uma direção aleatória.
 
-Segue abaixo um fluxograma do funcionamento do movimento da bola:
+## Funcionamento das Principais Funções e Procedimentos
+
+### mover()
+
+Responsável por mover a bola pelo "campo de jogo". Verifica a posição atual da bola, se está batendo em algum obstáculo e move para a próxima posição.
+
+Segue abaixo um fluxograma do funcionamento:
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/91160798/162509734-c137a5e3-580d-4580-b9b4-7ff867c08bb6.png"
@@ -92,11 +99,9 @@ Segue abaixo um fluxograma do funcionamento do movimento da bola:
        height = auto />
 </p>
 
-## Principais Funções
-
 ### mudar_dificuldade()
 
-Quando chamada, essa função muda a dificuldade de jogo (1: Fácil; 2: Médio; 3: Difícil). Ela muda o valor da variável responsável por armazenar a dificuldade, também muda a velocidade da bola (que varia conforme a dificuldade do jogo), além de fazer a indicação visual da dificuldade atual no LED correspondente.
+Quando chamado, este procedimento muda a dificuldade de jogo (1: Fácil; 2: Médio; 3: Difícil). Ele muda o valor da variável responsável por armazenar a dificuldade, também muda a velocidade da bola (que varia conforme a dificuldade do jogo), além de fazer a indicação visual da dificuldade atual no LED correspondente.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/91160798/162511530-c6569dfa-0b81-41c8-afa9-676c5e47f01e.png"
@@ -104,10 +109,70 @@ Quando chamada, essa função muda a dificuldade de jogo (1: Fácil; 2: Médio; 
        height = auto />
 </p>
 
+### ponto_1() / ponto_2()
+
+Como o próprio nome sugere, fazem o incremento da pontuação, também reposicionam a bola no meio do "campo" para o recomeço da partida. Também emitem o som característico de "marcar ponto" e "pausam" o jogo rapidamente, para mostrar a pontuação.
+
+### verif_numero(int valor)
+
+Recebe um número do tipo _inteiro_, de 0 a 9, e armazena o "desenho visual" desse número em uma matriz chamada **numero[6][3]** ("transforma" um _inteiro_ em uma matriz).
+
+Por exemplo, se chamarmos verif_numero(3), a variável **numero[6][3]** ficará da seguinte forma:
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/91160798/162524634-9b7c4f52-418a-4518-9e46-229d409b78c9.png"
+       width = "100"
+       height = auto />
+</p>
+
+### atualiza_lc1() / atualiza_lc2()
+
+Realizam a atualização dos Displays 1 (esquerda) e 2 (direita) (que formam a imagem do "campo de jogo" para os jogadores).
+
+As telas podem exibir duas coisas:
+- Tela de jogo (matriz do jogo);
+- Tela de pausa (pontuação dos jogadores).
+
+Se o jogo está **pausado**, o Display 1 mostra a pontuação do Player 1 e o Display 2 mostra a pontuação do Player 2. Se o jogo **não está pausado** (sendo jogado), os displays mostram a matriz do jogo (o Display 1 mostra a metade da esquerda da matriz de jogo e o Display 2 mostra a metade da direita).
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/91160798/162517826-9956b86c-b3e9-4157-be69-55a1a9835b3e.png"
+       width = "350"
+       height = auto />
+</p>
+
+Quando o jogo está **pausado**, é "desenhada" a pontuação na tela, usando _verif_numero()_, que vimos anteriormente.
+
+Por exemplo, para "desenhar" o número 32, é passado primeiro 3 (na posição de dezena) e depois 2 (na posição de unidade):
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/91160798/162526663-95c973ef-4d2e-4276-af57-4569377b46f7.png"
+       width = "700"
+       height = auto />
+</p>
+
+### fc_timer1()
+
+Essa função está ligada ao estouro do Timer1 e é chamada a cada 1ms. É usada para contar tempo de forma "paralela" ao fluxo de execução do programa, incrementando uma variável contadora.
+
+Esta variável contadora só é incrementada quando o jogo não está pausado.
+
+### setup()
+
+Executado quando o Arduino é ligado ou resetado. Aqui são feitas as configurações iniciais, como por exemplo a configuração dos pinos de entrada e saída, a configuração do Timer1 e a função ligada ao seu estouro, também a configuração dos displays de LED 8x8, além de serem feitas atribuições de valores iniciais à determinadas variáveis (por exemplo a pontuação dos jogadores, que começa sendo 0).
+
 ### loop()
 
-Segue abaixo um fluxograma do funcionamento do loop.
+O loop() faz várias verificações importantes:
+- Verificação do movimento da bola (se é o momento certo da bola se mover (se a variável contadora incrementada por fc_timer1() atingiu o valor desejado), a bola é movida);
+- Verificação do pressionamento dos botões (pausa e mudança de dificuldade);
+- Aferição dos joysticks, para o posicionamento correto das raquetes do jogo.
+
+Segue abaixo um fluxograma do funcionamento do loop():
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/91160798/162509434-821c086e-cfeb-44ad-bf70-19f76ca8190b.png" />
 </p>
+
+## Créditos
+
+Criado por: Paulo André Camargo Cocco, Mateus da Silva Cocco e Willy John Nakamura Goto.
