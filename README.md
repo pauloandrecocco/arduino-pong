@@ -89,9 +89,9 @@ Para o modo Difícil, como a raquete é menor (tamanho 2), a bola é rebatida pa
 
 ### mover()
 
-Responsável por mover a bola pelo "campo de jogo". Verifica a posição atual da bola, se está batendo em algum obstáculo e move para a próxima posição.
+Responsável por mover a bola pelo "campo de jogo". Com base na direção de movimento da bola no momento, verifica o que está prestes a acontecer (rebater na raquete, marcar ponto (sem raquete pela frente), rebater na parede ou seguir se movimentando na mesma direção) e, conforme isto, faz a ação necessária (rebater, marcar ponto ou movimentar a bola).
 
-Segue abaixo um fluxograma do funcionamento:
+Segue abaixo um fluxograma do funcionamento na situação em que a bola está se movendo na direção cima/esquerda (1 das 6 situações possíveis de movimento):
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/91160798/162509734-c137a5e3-580d-4580-b9b4-7ff867c08bb6.png"
