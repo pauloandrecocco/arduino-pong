@@ -133,7 +133,7 @@ As telas podem exibir duas coisas:
 - Tela de jogo (matriz do jogo);
 - Tela de pausa (pontuação dos jogadores).
 
-Se o jogo está **pausado**, o Display 1 mostra a pontuação do Player 1 e o Display 2 mostra a pontuação do Player 2. Se o jogo **não está pausado** (sendo jogado), os displays mostram a matriz do jogo (o Display 1 mostra a metade da esquerda da matriz de jogo e o Display 2 mostra a metade da direita).
+Se o jogo está **pausado**, o Display 1 mostra a pontuação do Player 1 e o Display 2 mostra a pontuação do Player 2. Se o jogo **não está pausado** (ou seja, está sendo jogado), os displays mostram a matriz do jogo (o Display 1 mostra a metade da esquerda da matriz de jogo e o Display 2 mostra a metade da direita).
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/91160798/162517826-9956b86c-b3e9-4157-be69-55a1a9835b3e.png"
@@ -141,9 +141,10 @@ Se o jogo está **pausado**, o Display 1 mostra a pontuação do Player 1 e o Di
        height = auto />
 </p>
 
-Quando o jogo está **pausado**, é "desenhada" a pontuação na tela, usando _verif_numero()_, que vimos anteriormente.
+Quando o jogo está **pausado**, a pontuação dos jogadores é "desenhada" na tela, usando _verif_numero()_, que vimos anteriormente. Primeiro o valor da pontuação é "desenhado" na variável *numero[6][3]* (chamando _verif_numero()_ com o valor desejado) e então esta variável (que agora contém o "desenho" do valor a ser representado na tela) é "desenhada" na posição correta na tela. 
 
-Por exemplo, para "desenhar" o número 32, é passado primeiro 3 (na posição de dezena) e depois 2 (na posição de unidade):
+Por exemplo, supondo que um jogador tem 32 pontos: para mostrar o número 32, primeiro a variável *numero[6][3]* adquire o "desenho" do número 3 (dezena da pontuação) e esta variável é "desenhada" na tela na posição correspondente à dezena, na sequência *numero[6][3]* adquire o "desenho" do 2 (unidade da pontuação) e é "desenhada" na posição de unidade:
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/91160798/162526663-95c973ef-4d2e-4276-af57-4569377b46f7.png"
        width = "700"
